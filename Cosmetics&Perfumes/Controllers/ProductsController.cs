@@ -15,7 +15,7 @@ namespace Cosmetics_Perfumes.Controllers
             _allCategories = productsCategory;
         }
 
-        public ViewResult Index()
+        public IActionResult Index()
         {
             ProductsListViewModel model = new ProductsListViewModel();
             model.AllProducts = _allProducts.Products;

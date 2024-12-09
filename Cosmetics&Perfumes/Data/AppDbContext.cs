@@ -9,7 +9,9 @@ namespace Cosmetics_Perfumes.Data
             
         }
 
+        //Добавление представлений базы данных
         public DbSet<Product> Product { get; set; }
         public DbSet<Category> Category { get; set; }
+        public DbSet<ShopCartItem> ShopCartItem { get; set; }
     }
 }

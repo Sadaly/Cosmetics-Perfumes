@@ -5,7 +5,11 @@ namespace Cosmetics_Perfumes.Data.Repository
 {
     public class CategoryRepository : IProductsCategory
     {
-
-        public IEnumerable<Category> AllCategories => throw new NotImplementedException();
+        private readonly AppDbContext _context;
+        public CategoryRepository(AppDbContext context)
+        {
+            _context = context;
+        }
+        public IEnumerable<Category> AllCategories => _context.Category;
     }
 }

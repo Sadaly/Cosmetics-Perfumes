@@ -1,18 +1,31 @@
 using Cosmetics_Perfumes.Data;
 using Cosmetics_Perfumes.Data.Interfaces;
-using Cosmetics_Perfumes.Data.Mocks;
+using Cosmetics_Perfumes.Data.Repository;
+using Cosmetics_Perfumes.Models;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+#region My_config_services
+//Строка подключения
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+//Представление базы данных
+builder.Services.AddTransient<IAllProducts, ProductRepository>();
+builder.Services.AddTransient<IProductsCategory, CategoryRepository>();
+
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddScoped(sp => ShopCart.GetCart(sp));
+#endregion
+
 builder.Services.AddControllersWithViews();
-builder.Services.AddTransient<IAllProducts, MockProducts>();
-builder.Services.AddTransient<IProductsCategory, MockCategory>();
+
 builder.Services.AddMvc();
+
+builder.Services.AddMemoryCache();
+builder.Services.AddSession();
 
 var app = builder.Build();
 
@@ -24,9 +37,17 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+#region My_app_config
+using (var scope = app.Services.CreateScope())
+{
+    AppDbContext context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    DbObjects.Initial(context);
+}
+#endregion
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
+app.UseSession();
 app.UseRouting();
 
 app.UseAuthorization();
