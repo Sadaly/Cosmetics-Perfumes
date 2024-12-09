@@ -7,14 +7,9 @@
 <h3>Категория: @Model.CurrentCategory</h3>
 <div class="row mt-5 mb-2">
     @{
-        foreach(var product in Model.AllProducts){
-            <div class="col-lg-4">
-                <img class="img-thumbnail object-fit-cover h-50 w-100" src="@product.Image" alt="@product.Name" />
-                <h2>Товар: @product.Name</h2>
-                <p>Описание: @product.ShortDescription</p>
-                <p>Цена: @product.Price.ToString("c")</p>
-                <p><a class="btn btn-warning" href="#">Подробнее</a></p>
-            </div>
+        foreach (var product in Model.AllProducts)
+        {
+            @Html.Partial("_AllProducts", product);
         }
     }
 </div>

@@ -1,9 +1,14 @@
+using Cosmetics_Perfumes.Data;
 using Cosmetics_Perfumes.Data.Interfaces;
 using Cosmetics_Perfumes.Data.Mocks;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 builder.Services.AddControllersWithViews();
 builder.Services.AddTransient<IAllProducts, MockProducts>();
 builder.Services.AddTransient<IProductsCategory, MockCategory>();

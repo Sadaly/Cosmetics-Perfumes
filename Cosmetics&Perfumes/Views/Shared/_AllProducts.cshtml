@@ -1,0 +1,11 @@
+﻿@model Product
+<div class="col-lg-4">
+    <img class="img-thumbnail object-fit-cover h-50 w-100" src="@Model.Image" alt="@Model.Name" />
+    <h2>Товар: @Model.Name</h2>
+    <p>Описание: @Model.ShortDescription</p>
+    <p>Цена: @Model.Price.ToString("c")</p>
+    <div class="align-content-between">
+        <a class="btn btn-outline-primary" href="#">Добавить</a>
+        <a class="btn btn-warning" href="#">Подробнее</a>
+    </div>
+</div>
