@@ -2,6 +2,7 @@ using Cosmetics_Perfumes.Data;
 using Cosmetics_Perfumes.Data.Interfaces;
 using Cosmetics_Perfumes.Data.Repository;
 using Cosmetics_Perfumes.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +16,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 //Представление базы данных
 builder.Services.AddTransient<IAllProducts, ProductRepository>();
 builder.Services.AddTransient<IProductsCategory, CategoryRepository>();
+builder.Services.AddTransient<IAllOrders, OrderRepository>();
 
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped(sp => ShopCart.GetCart(sp));
@@ -55,5 +57,9 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+app.MapControllerRoute(
+    name: "categoryFilter",
+    pattern: "{controller=Products}/{action=List}/{category?}");
+
 
 app.Run();

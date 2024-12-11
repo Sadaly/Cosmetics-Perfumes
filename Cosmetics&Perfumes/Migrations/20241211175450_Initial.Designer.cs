@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Cosmetics_Perfumes.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241209172920_Initial")]
+    [Migration("20241211175450_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -88,6 +88,31 @@ namespace Cosmetics_Perfumes.Migrations
                     b.ToTable("Product");
                 });
 
+            modelBuilder.Entity("Cosmetics_Perfumes.Models.ShopCartItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ShopCartId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ShopCartItem");
+                });
+
             modelBuilder.Entity("Cosmetics_Perfumes.Models.Product", b =>
                 {
                     b.HasOne("Cosmetics_Perfumes.Models.Category", "Category")
@@ -97,6 +122,17 @@ namespace Cosmetics_Perfumes.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("Cosmetics_Perfumes.Models.ShopCartItem", b =>
+                {
+                    b.HasOne("Cosmetics_Perfumes.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Cosmetics_Perfumes.Models.Category", b =>

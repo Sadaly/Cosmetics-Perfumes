@@ -1,4 +1,4 @@
-﻿using System.Data.Entity;
+﻿using Microsoft.EntityFrameworkCore;
 using Cosmetics_Perfumes.Data;
 
 namespace Cosmetics_Perfumes.Models

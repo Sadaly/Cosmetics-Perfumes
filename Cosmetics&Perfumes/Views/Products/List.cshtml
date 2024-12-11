@@ -9,7 +9,8 @@
     @{
         foreach (var product in Model.AllProducts)
         {
-            @Html.Partial("_AllProducts", product);
+            @Html.Partial("AllProducts", product)
+            ;
         }
     }
 </div>

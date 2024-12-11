@@ -5,7 +5,6 @@
     <p>Описание: @Model.ShortDescription</p>
     <p>Цена: @Model.Price.ToString("c")</p>
     <div class="align-content-between">
-        <a class="btn btn-outline-primary" href="#">Добавить</a>
-        <a class="btn btn-warning" href="#">Подробнее</a>
+        <a class="btn btn-outline-primary" asp-controller="ShopCart" asp-action="AddToCart" asp-route-id="@Model.Id">Добавить в корзину</a>
     </div>
 </div>

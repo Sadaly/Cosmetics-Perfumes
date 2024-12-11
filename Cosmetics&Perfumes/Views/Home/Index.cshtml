@@ -1,4 +1,5 @@
-﻿@{
+﻿@model HomeViewModel
+@{
     ViewData["Title"] = "Главная страница";
 }
 
@@ -11,5 +12,11 @@
       <a href="#" class="btn btn-lg btn-light fw-bold border-white bg-white">Learn more</a>
     </p>
   </main>
-
+    <div class="row mt-3 mb-2">
+        @foreach (Product product in Model.favoriteProducts)
+        {
+            @Html.Partial("AllProducts", product)
+        }
+  </div>
+  
 </div>

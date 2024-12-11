@@ -1,27 +1,25 @@
 using System.Diagnostics;
+using Cosmetics_Perfumes.Data.Interfaces;
 using Cosmetics_Perfumes.Models;
+using Cosmetics_Perfumes.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cosmetics_Perfumes.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IAllProducts _productRepository;
+        public HomeController(IAllProducts productRepository)
         {
-            _logger = logger;
+            _productRepository = productRepository;
         }
 
         public IActionResult Index()
         {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            var homeProduct = new HomeViewModel{
+                favoriteProducts = _productRepository.GetFavProducts,
+            };
+            return View(homeProduct);
         }
     }
 }

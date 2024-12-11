@@ -28,13 +28,19 @@ namespace Cosmetics_Perfumes.Controllers
             return View(obj);
         }
 
-        public RedirectToActionResult AddToCart(int id)
+        public IActionResult AddToCart(int id)
         {
             var item = _productRepository.Products.FirstOrDefault(i => i.Id == id);
             if (item != null)
             {
                 _shopCart.AddToCart(item);
             }
+            string refererUrl = Request.Headers["Referer"].ToString();
+            if (!string.IsNullOrEmpty(refererUrl))
+            {
+                return Redirect(refererUrl);
+            }
+
             return RedirectToAction("Index");
         }
     }
